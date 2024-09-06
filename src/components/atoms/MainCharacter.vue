@@ -29,7 +29,7 @@ const handleDelete = (person) => {
 </script>
 
 <template>
-  <ul role="list" class="grid grid-cols-1 gap-6">
+  <ul role="list" class="grid grid-cols-1 gap-6 cursor-pointer">
     <li
       v-for="person in people"
       :key="person.email"

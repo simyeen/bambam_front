@@ -4,6 +4,9 @@ import { AuthAPI } from '@/api';
 
 import DashboardLayout from '@/DashboardLayout.vue';
 import HomePresenter from './HomePresenter.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const people = [
   {
@@ -28,10 +31,14 @@ onMounted(() => {
     console.log(error);
   }
 });
+
+const handleClick = () => {
+  router.push('/reptile');
+};
 </script>
 
 <template>
   <DashboardLayout>
-    <HomePresenter :people="people" :files="files" />
+    <HomePresenter :people="people" :files="files" :handleClick="handleClick" />
   </DashboardLayout>
 </template>

@@ -29,7 +29,7 @@ const route = useRoute();
 const sidebarOpen = ref(false);
 
 const navigation = [
-  { name: '홈', href: '#', icon: HomeIcon, current: true },
+  { name: '홈', href: '/home', icon: HomeIcon, current: true },
   { name: '통계', href: '#', icon: ChartPieIcon, current: false },
   { name: 'Team', href: '#', icon: UsersIcon, current: false },
   { name: 'Projects', href: '#', icon: FolderIcon, current: false },

@@ -54,57 +54,6 @@ const { modalVisible, toggleModal } = defineProps({
                   for="email"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  본부
-                </label>
-                <input
-                  type="branchType"
-                  name="branchType"
-                  id="branchType"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  placeholder=""
-                  required
-                  @change="handleChange"
-                />
-              </div>
-              <div>
-                <label
-                  for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  센터
-                </label>
-                <input
-                  type="centerType"
-                  name="centerType"
-                  id="centerType"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  placeholder=""
-                  required
-                  @change="handleChange"
-                />
-              </div>
-              <div>
-                <label
-                  for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  팀명
-                </label>
-                <input
-                  type="team"
-                  name="team"
-                  id="team"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  placeholder="팀명을 입력해주세요."
-                  required
-                  @change="handleChange"
-                />
-              </div>
-              <div>
-                <label
-                  for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
                   이름
                 </label>
                 <input
@@ -122,7 +71,7 @@ const { modalVisible, toggleModal } = defineProps({
                   for="email"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  신규 아이디
+                  이메일
                 </label>
                 <input
                   type="email"

@@ -1,6 +1,6 @@
 <script>
 import { ref, onMounted } from 'vue';
-import SignIn from '@/components/blocks/SignIn/SignInContainer.vue';
+import SignIn from '@/components/blocks/SignIn';
 
 export default {
   name: 'LoginPresenter',
