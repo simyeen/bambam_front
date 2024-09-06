@@ -1,11 +1,10 @@
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { AuthAPI } from '@/api';
 
+import DashboardLayout from '@/DashboardLayout.vue';
 import ReptilePresenter from './ReptilePresenter.vue';
-// import DashboardLayout from './DashboardLayout.vue';
-import { ref } from 'vue';
-import DashboardLayout from '@/components/DashboardLayout.vue';
+import DetailBox from './DetailBox.vue';
 
 const people = [
   {
@@ -117,6 +116,7 @@ onMounted(() => {
 
 <template>
   <DashboardLayout>
+    <DetailBox />
     <ReptilePresenter :people="people" :files="files" :isLoading="isLoading" />
   </DashboardLayout>
 </template>

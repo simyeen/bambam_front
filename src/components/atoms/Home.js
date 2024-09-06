@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import Board from '../../blocks/Board';
+import Board from '../blocks/Board';
 
 import Dropdown from '../../atoms/Dropdown';
-import Camera from '../../blocks/Camera';
-import Photo from '../../blocks/Photo';
-import Share from '../../blocks/Share';
-import Combine from '../../blocks/Combine';
-import Result from '../../blocks/Result';
-import Profile from '../../blocks/Profile';
+import Camera from '../blocks/Camera';
+import Photo from '../blocks/Photo';
+import Share from '../blocks/Share';
+import Combine from '../blocks/Combine';
+import Result from '../blocks/Result';
+import Profile from '../blocks/Profile';
 
 const Home = ({ BOARD_BUTTON_LIST, seletedBoard, handleLogout, imageRef, handleSelect }) => {
   const [isOpend, setIsOpend] = useState(false);
@@ -39,7 +39,12 @@ const Home = ({ BOARD_BUTTON_LIST, seletedBoard, handleLogout, imageRef, handleS
                   aria-haspopup="true"
                 >
                   {seletedBoard.title}
-                  <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <svg
+                    class="-mr-1 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
                     <path
                       fill-rule="evenodd"
                       d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
@@ -48,7 +53,12 @@ const Home = ({ BOARD_BUTTON_LIST, seletedBoard, handleLogout, imageRef, handleS
                   </svg>
                 </button>
               </div>
-              <Dropdown itemList={BOARD_BUTTON_LIST} {...{ isOpend }} {...{ setIsOpend }} {...{ handleSelect }} />
+              <Dropdown
+                itemList={BOARD_BUTTON_LIST}
+                {...{ isOpend }}
+                {...{ setIsOpend }}
+                {...{ handleSelect }}
+              />
               <div
                 onClick={() => {
                   setModalVisible(!modalVisible);

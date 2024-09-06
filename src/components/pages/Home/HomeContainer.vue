@@ -2,11 +2,8 @@
 import { onMounted } from 'vue';
 import { AuthAPI } from '@/api';
 
-import DashboardLayout from '@/components/DashboardLayout.vue';
-
+import DashboardLayout from '@/DashboardLayout.vue';
 import HomePresenter from './HomePresenter.vue';
-
-// import DashboardLayout from './DashboardLayout.vue';
 
 const people = [
   {

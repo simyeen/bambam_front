@@ -43,7 +43,7 @@ const handleDelete = (person) => {
         class="absolute border-none top-2 right-2 text-semibold bg-white rounded-md px-1 hover:bg-slate-200 transition ease-in-out duration-200 transform hover:scale-110 focus:outline-none"
         style="border: none"
       >
-        ✕
+        +
       </button>
 
       <div class="flex flex-1 flex-col p-8 border-none">
