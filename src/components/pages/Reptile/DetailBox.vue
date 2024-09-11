@@ -3,13 +3,26 @@ import { ref } from 'vue';
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue';
 import { HeartIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { PencilIcon, PlusIcon } from '@heroicons/vue/20/solid';
+import { useReptileStore } from '@/stores/reptile';
+import { toImageSrl } from '@/util/data';
 
-const open = ref(true);
+const { onToggle } = defineProps({
+  open: Boolean,
+  onToggle: Function
+});
+
+const reptileStore = useReptileStore();
+
+const { birthDate, image, name, reptileId, speciesId, userId } = reptileStore;
+
+const check = () => {
+  console.log('reptileStore 체크', reptileStore);
+};
 </script>
 
 <template>
   <TransitionRoot as="template" :show="open">
-    <Dialog class="relative z-10" @close="open = false">
+    <Dialog class="relative z-10" @close="onToggle">
       <TransitionChild
         as="template"
         enter="ease-in-out duration-500"
@@ -48,7 +61,7 @@ const open = ref(true);
                     <button
                       type="button"
                       class="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                      @click="open = false"
+                      @click="onToggle"
                     >
                       <span class="absolute -inset-2.5" />
                       <span class="sr-only">Close panel</span>
@@ -56,22 +69,18 @@ const open = ref(true);
                     </button>
                   </div>
                 </TransitionChild>
-                <div class="h-full overflow-y-auto bg-white p-8">
+                <div class="mt-16 h-full overflow-y-auto bg-white p-8">
                   <div class="space-y-6 pb-16">
                     <div>
                       <div class="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg">
-                        <img
-                          src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80"
-                          alt=""
-                          class="object-cover"
-                        />
+                        <img :src="toImageSrl(image)" alt="" class="object-cover" />
                       </div>
                       <div class="mt-4 flex items-start justify-between">
                         <div>
                           <h2 class="text-base font-semibold leading-6 text-gray-900">
-                            <span class="sr-only">Details for </span>IMG_4985.HEIC
+                            <span class="sr-only">Details for </span>{{ name }}
                           </h2>
-                          <p class="text-sm font-medium text-gray-500">3.9 MB</p>
+                          {{ birthDate }}
                         </div>
                         <button
                           type="button"
@@ -87,31 +96,28 @@ const open = ref(true);
                       <h3 class="font-medium text-gray-900">Information</h3>
                       <dl class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
                         <div class="flex justify-between py-3 text-sm font-medium">
-                          <dt class="text-gray-500">Uploaded by</dt>
-                          <dd class="text-gray-900">Marie Culver</dd>
+                          <dt class="text-gray-500">반려인</dt>
+                          <dd class="text-gray-900">김남일</dd>
                         </div>
                         <div class="flex justify-between py-3 text-sm font-medium">
-                          <dt class="text-gray-500">Created</dt>
-                          <dd class="text-gray-900">June 8, 2020</dd>
+                          <dt class="text-gray-500">종류</dt>
+                          <dd class="text-gray-900">크리스티드 개코</dd>
+                        </div>
+
+                        <div class="flex justify-between py-3 text-sm font-medium">
+                          <dt class="text-gray-500">몸무게</dt>
+                          <dd class="text-gray-900">9g</dd>
                         </div>
                         <div class="flex justify-between py-3 text-sm font-medium">
-                          <dt class="text-gray-500">Last modified</dt>
-                          <dd class="text-gray-900">June 8, 2020</dd>
-                        </div>
-                        <div class="flex justify-between py-3 text-sm font-medium">
-                          <dt class="text-gray-500">Dimensions</dt>
-                          <dd class="text-gray-900">4032 x 3024</dd>
-                        </div>
-                        <div class="flex justify-between py-3 text-sm font-medium">
-                          <dt class="text-gray-500">Resolution</dt>
-                          <dd class="text-gray-900">72 x 72</dd>
+                          <dt class="text-gray-500">성격</dt>
+                          <dd class="text-gray-900">온순함</dd>
                         </div>
                       </dl>
                     </div>
                     <div>
                       <h3 class="font-medium text-gray-900">Description</h3>
                       <div class="mt-2 flex items-center justify-between">
-                        <p class="text-sm italic text-gray-500">Add a description to this image.</p>
+                        <p class="text-sm italic text-gray-500">생각보다 무척 귀여움</p>
                         <button
                           type="button"
                           class="relative -mr-2 flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -122,76 +128,7 @@ const open = ref(true);
                         </button>
                       </div>
                     </div>
-                    <div>
-                      <h3 class="font-medium text-gray-900">Shared with</h3>
-                      <ul
-                        role="list"
-                        class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200"
-                      >
-                        <li class="flex items-center justify-between py-3">
-                          <div class="flex items-center">
-                            <img
-                              src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=1024&h=1024&q=80"
-                              alt=""
-                              class="h-8 w-8 rounded-full"
-                            />
-                            <p class="ml-4 text-sm font-medium text-gray-900">Aimee Douglas</p>
-                          </div>
-                          <button
-                            type="button"
-                            class="ml-6 rounded-md bg-white text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                          >
-                            Remove<span class="sr-only"> Aimee Douglas</span>
-                          </button>
-                        </li>
-                        <li class="flex items-center justify-between py-3">
-                          <div class="flex items-center">
-                            <img
-                              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=oilqXxSqey&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                              alt=""
-                              class="h-8 w-8 rounded-full"
-                            />
-                            <p class="ml-4 text-sm font-medium text-gray-900">Andrea McMillan</p>
-                          </div>
-                          <button
-                            type="button"
-                            class="ml-6 rounded-md bg-white text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                          >
-                            Remove<span class="sr-only"> Andrea McMillan</span>
-                          </button>
-                        </li>
-                        <li class="flex items-center justify-between py-2">
-                          <button
-                            type="button"
-                            class="group -ml-1 flex items-center rounded-md bg-white p-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                          >
-                            <span
-                              class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-dashed border-gray-300 text-gray-400"
-                            >
-                              <PlusIcon class="h-5 w-5" aria-hidden="true" />
-                            </span>
-                            <span
-                              class="ml-4 text-sm font-medium text-indigo-600 group-hover:text-indigo-500"
-                              >Share</span
-                            >
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="flex">
-                      <button
-                        type="button"
-                        class="flex-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      >
-                        Download
-                      </button>
-                      <button
-                        type="button"
-                        class="ml-3 flex-1 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                      >
-                        Delete
-                      </button>
-                    </div>
+                    <div></div>
                   </div>
                 </div>
               </DialogPanel>

@@ -1,7 +1,8 @@
 <script setup>
-const { isLoading, files } = defineProps({
+const { isLoading, files, onToggle } = defineProps({
   isLoading: Boolean,
-  files: Array
+  files: Array,
+  onToggle: Function
 });
 </script>
 
@@ -36,7 +37,7 @@ const { isLoading, files } = defineProps({
           alt=""
           class="pointer-events-none object-cover group-hover:opacity-75"
         />
-        <button type="button" class="absolute inset-0 focus:outline-none">
+        <button @click="onToggle" type="button" class="absolute inset-0 focus:outline-none">
           <span class="sr-only">View details for {{ file.title }}</span>
         </button>
       </div>

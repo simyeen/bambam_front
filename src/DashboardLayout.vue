@@ -22,29 +22,31 @@ import {
   XMarkIcon
 } from '@heroicons/vue/24/outline';
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid';
-import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 
-const route = useRoute();
+const router = useRouter();
 const sidebarOpen = ref(false);
 
 const navigation = [
   { name: '홈', href: '/home', icon: HomeIcon, current: true },
-  { name: '통계', href: '#', icon: ChartPieIcon, current: false },
-  { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-  { name: '사진 합성하기', href: '#', icon: DocumentDuplicateIcon, current: false }
+  { name: '캘린더', href: '/calendar', icon: CalendarIcon, current: false },
+  { name: '통계', href: '/chart', icon: ChartPieIcon, current: false },
+  { name: '새로운 친구 추가하기', href: '/add', icon: DocumentDuplicateIcon, current: false }
 ];
 const teams = [
-  { id: 1, name: '새로운 친구 추가하기', href: '#', initial: 'H', current: false },
-  { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-  { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false }
+  { id: 1, name: '플랫폼 소개', href: '#', initial: 'P', current: false },
+  { id: 2, name: '더 알아보기', href: '#', initial: 'M', current: false },
+  { id: 3, name: 'FAQ', href: '#', initial: 'F', current: false }
 ];
 const userNavigation = [
-  { name: 'Your profile', href: '#' },
-  { name: 'Sign out', href: '#' }
+  { name: '내 정보', href: '#' },
+  { name: '로그아웃', href: '#' }
 ];
+
+const handleClick = (href) => {
+  router.push(href);
+};
 </script>
 
 <template>
@@ -104,13 +106,13 @@ const userNavigation = [
                     <li>
                       <ul role="list" class="-mx-2 space-y-1">
                         <li v-for="item in navigation" :key="item.name">
-                          <a
-                            :href="item.href"
+                          <p
+                            @click="handleClick(item.href)"
                             :class="[
                               item.current
                                 ? 'bg-gray-50 text-indigo-600'
                                 : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
-                              'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
+                              'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 cursor-pointer'
                             ]"
                           >
                             <component
@@ -124,16 +126,16 @@ const userNavigation = [
                               aria-hidden="true"
                             />
                             {{ item.name }}
-                          </a>
+                          </p>
                         </li>
                       </ul>
                     </li>
                     <li>
-                      <div class="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+                      <div class="text-xs font-semibold leading-6 text-gray-400">Your friends</div>
                       <ul role="list" class="-mx-2 mt-2 space-y-1">
                         <li v-for="team in teams" :key="team.name">
-                          <a
-                            :href="team.href"
+                          <p
+                            @click="handleClick(team.href)"
                             :class="[
                               team.current
                                 ? 'bg-gray-50 text-indigo-600'
@@ -151,7 +153,7 @@ const userNavigation = [
                               >{{ team.initial }}</span
                             >
                             <span class="truncate">{{ team.name }}</span>
-                          </a>
+                          </p>
                         </li>
                       </ul>
                     </li>
@@ -190,13 +192,13 @@ const userNavigation = [
             <li>
               <ul role="list" class="-mx-2 space-y-1">
                 <li v-for="item in navigation" :key="item.name">
-                  <a
-                    :href="item.href"
+                  <p
+                    @click="handleClick(item.href)"
                     :class="[
                       item.current
                         ? 'bg-gray-50 text-indigo-600'
                         : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
-                      'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
+                      'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 cursor-pointer'
                     ]"
                   >
                     <component
@@ -210,12 +212,12 @@ const userNavigation = [
                       aria-hidden="true"
                     />
                     {{ item.name }}
-                  </a>
+                  </p>
                 </li>
               </ul>
             </li>
             <li>
-              <div class="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+              <div class="text-xs font-semibold leading-6 text-gray-400">Your friends</div>
               <ul role="list" class="-mx-2 mt-2 space-y-1">
                 <li v-for="team in teams" :key="team.name">
                   <a
@@ -304,14 +306,14 @@ const userNavigation = [
                 <span class="sr-only">Open user menu</span>
                 <img
                   class="h-8 w-8 rounded-full bg-gray-50"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  src="/images/frozen-rizard.png"
                   alt=""
                 />
                 <span class="hidden lg:flex lg:items-center">
                   <span
                     class="ml-4 text-sm font-semibold leading-6 text-gray-900"
                     aria-hidden="true"
-                    >Tom Cook</span
+                    >김남일님</span
                   >
                   <ChevronDownIcon class="ml-2 h-5 w-5 text-gray-400" aria-hidden="true" />
                 </span>

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
 import Login from '@/components/pages/Login';
 
 const router = createRouter({
@@ -11,12 +12,25 @@ const router = createRouter({
       component: () => import('../components/pages/Home')
     },
     {
-      path: '/reptile',
+      path: '/reptile/:id',
       name: 'reptile',
       component: () => import('../components/pages/Reptile')
     },
-
-    { path: '/param/:id', name: 'param', component: () => import('../views/ParamView.vue') }
+    {
+      path: '/add',
+      name: 'add',
+      component: () => import('../components/pages/Add')
+    },
+    {
+      path: '/chart',
+      name: 'chart',
+      component: () => import('../components/pages/Chart')
+    },
+    {
+      path: '/calendar',
+      name: 'calendar',
+      component: () => import('../components/pages/Calendar')
+    }
   ]
 });
 

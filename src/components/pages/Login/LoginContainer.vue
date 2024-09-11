@@ -1,14 +1,17 @@
 <script setup>
 import { ref } from 'vue';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { authService } from '../../../firebase';
-
-import LoginPresenter from './LoginPresenter.vue';
 import { useRouter } from 'vue-router';
 
+import { AuthAPI } from '@/api';
+import { useAuthStore } from '@/stores/auth';
+
+import LoginPresenter from './LoginPresenter.vue';
+
 const router = useRouter();
+const authStore = useAuthStore();
+
 const loginForm = ref({
-  email: '',
+  username: '',
   password: ''
 });
 
@@ -19,17 +22,13 @@ const handleChange = (e) => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-  const { email, password } = loginForm.value;
-  console.log(email, password, '??');
 
   try {
-    const userCredential = await signInWithEmailAndPassword(authService, email, password);
-    if (userCredential.user.uid) {
-      router.push('/home');
-      console.log('로그인 성공');
-    }
-  } catch (error) {
+    const token = await AuthAPI.login({ data: { ...loginForm.value } });
+    authStore.setToken(token);
+    console.log('토큰 저장 완료', token);
     router.push('/home');
+  } catch (error) {
     console.log(error);
     alert('아이디 혹은 비밀번호가 틀렸습니다.');
   }

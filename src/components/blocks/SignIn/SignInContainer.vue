@@ -1,22 +1,19 @@
 <script setup>
-import { ref, reactive } from 'vue';
-import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
-import { v4 as uuidv4 } from 'uuid';
-import { authService, dbService } from '../../../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { reactive } from 'vue';
 
 import SignInPresenter from './SignInPresenter.vue';
+import { AuthAPI } from '@/api';
+import { useRouter } from 'vue-router';
 
 const { modalVisible, toggleModal } = defineProps({
   modalVisible: Boolean,
   toggleModal: Function
 });
 
+const router = useRouter();
+
 const SIGNIN_FORM = {
-  branchType: '',
-  centerType: '',
-  name: '',
-  team: '',
+  username: '',
   email: '',
   password: '',
   checkedPassword: ''
@@ -30,10 +27,10 @@ const handleChange = (e) => {
 };
 
 const handleSubmit = async () => {
-  const { name, team, email, password, checkedPassword, branchType, centerType } = signInForm;
+  const { username, email, password, checkedPassword } = signInForm;
   const emailRegex = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 
-  if ([name, team, email, password, checkedPassword].includes('')) {
+  if ([username, email, password, checkedPassword].includes('')) {
     alert('빈칸 없이 입력해주세요.');
     return;
   }
@@ -53,11 +50,7 @@ const handleSubmit = async () => {
     return;
   }
 
-  if (
-    window.confirm(
-      `입력한 정보가 맞으신가요? 이름과 아이디는 추후 수정이 어렵습니다.\n\n이름: ${name}\n아이디: ${email}`
-    )
-  ) {
+  if (window.confirm(`입력한 정보가 맞으신가요? \n아이디: ${username}\n이메일: ${email}`)) {
     // Continue
   } else {
     console.log('취소');
@@ -65,44 +58,11 @@ const handleSubmit = async () => {
   }
 
   try {
-    const q = query(
-      collection(dbService, process.env.VUE_APP_FIREBASE_USER_COLLECTION),
-      where('email', '==', email)
-    );
-    const querySnapshot = await getDocs(q);
-    const _userData = querySnapshot.docs.map((doc) => ({
-      ...doc.data()
-    }))[0];
+    const result = await AuthAPI.signIn({ data: { ...signInForm } });
+    console.log('result', result);
 
-    if (_userData) {
-      alert('이미 존재하는 아이디입니다.');
-      return;
-    }
-
-    const _userCredential = await createUserWithEmailAndPassword(authService, email, password);
-    if (!_userCredential) {
-      alert('서비스 에러발생, 다시 실행해주세요.');
-      return;
-    }
-
-    const userRef = collection(dbService, process.env.VUE_APP_FIREBASE_USER_COLLECTION);
-
-    if (_userCredential.user) {
-      const _dockey = uuidv4();
-      await setDoc(doc(userRef, _dockey), {
-        uid: _userCredential.user.uid,
-        dockey: _dockey,
-        name: name,
-        team: team,
-        email: email,
-        branchType: branchType,
-        centerType: centerType,
-        latestBoardType: 1,
-        createAt: new Date()
-      });
-    } else {
-      alert('오류가 발생했습니다.');
-    }
+    alert('회원가입 성공!');
+    // router.push('/home');
   } catch (error) {
     console.log('회원가입 실패', error);
   }

@@ -1,44 +1,58 @@
 <script setup>
 import { onMounted } from 'vue';
-import { AuthAPI } from '@/api';
+import { AuthAPI, ReptileAPI } from '@/api';
 
 import DashboardLayout from '@/DashboardLayout.vue';
 import HomePresenter from './HomePresenter.vue';
-import { useRouter } from 'vue-router';
 
-const router = useRouter();
+import { useAuthStore } from '@/stores/auth';
 
-const people = [
-  {
-    name: 'Jane Cooper',
-    title: 'Paradigm Representative',
-    role: 'Admin',
-    email: 'janecooper@example.com',
-    telephone: '+1-202-555-0170',
-    imageUrl: '/images/frozen-rizard.png'
-    // 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60'
+import { ref } from 'vue';
+import { useUserStore } from '@/stores/user';
+
+const authStore = useAuthStore();
+const reptiles = ref(null);
+
+const token = authStore.loadToken();
+
+const handleDelete = async (id) => {
+  if (confirm(`정말 삭제하시겠습니까?`)) {
+    try {
+      const result = ReptileAPI.delete({
+        id: id,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      alert('삭제가 완료됐습니다.');
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    console.log('삭제 취소됨');
   }
-  // More people...
-];
-
-onMounted(() => {
-  console.log('홈페이지 마운트 발생');
-
-  try {
-    console.log('testAPI 호출시작');
-    const testAPI = AuthAPI.hello();
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-const handleClick = () => {
-  router.push('/reptile');
 };
+
+onMounted(async () => {
+  const { data } = await ReptileAPI.reptiles({
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  reptiles.value = [...data];
+  console.log('reptiles.value', reptiles.value);
+});
 </script>
 
 <template>
   <DashboardLayout>
-    <HomePresenter :people="people" :files="files" :handleClick="handleClick" />
+    <HomePresenter
+      v-if="reptiles"
+      :reptiles="reptiles"
+      :files="files"
+      :handleDelete="handleDelete"
+    />
   </DashboardLayout>
 </template>

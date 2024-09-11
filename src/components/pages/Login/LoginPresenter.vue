@@ -98,12 +98,12 @@ export default {
         <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
           <form class="space-y-6" @submit.prevent="handleSubmit">
             <div>
-              <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
-                >이메일</label
+              <label for="username" class="block text-sm font-medium leading-6 text-gray-900"
+                >아이디</label
               >
               <div class="mt-2">
                 <input
-                  name="email"
+                  name="username"
                   @change="handleChange"
                   required
                   class="p-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
