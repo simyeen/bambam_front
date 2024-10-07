@@ -1,6 +1,4 @@
 <script setup>
-import { setUserProperties } from 'firebase/analytics';
-import { ref } from 'vue';
 const { modalVisible, toggleModal } = defineProps({
   modalVisible: Boolean,
   toggleModal: Function,
@@ -54,12 +52,12 @@ const { modalVisible, toggleModal } = defineProps({
                   for="email"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  이름
+                  아이디
                 </label>
                 <input
-                  type="name"
-                  name="name"
-                  id="name"
+                  type="username"
+                  name="username"
+                  id="username"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                   placeholder="이름을 입력해주세요."
                   required
